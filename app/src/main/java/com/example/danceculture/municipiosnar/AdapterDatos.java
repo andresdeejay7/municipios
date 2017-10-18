@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.danceculture.municipiosnar.models.Municipio;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by DanceCulture on 17/10/17.
@@ -14,9 +17,9 @@ import java.util.ArrayList;
 
 public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDatos> {
 
-    ArrayList<String> listDatos;
+    ArrayList<Municipio> listDatos;
 
-    public AdapterDatos(ArrayList<String> listDatos) {
+    public AdapterDatos(ArrayList<Municipio> listDatos) {
         this.listDatos = listDatos;
     }
 
@@ -30,7 +33,7 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
 
     @Override
     public void onBindViewHolder(ViewHolderDatos holder, int position) {
-        holder.asignarDatos(listDatos.get(position));
+        holder.dato.setText(listDatos.get(position).getNombreAlcalde());
 
     }
 

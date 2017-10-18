@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
     public static final String TAG = "datosColombia";
 
-    ArrayList<String> listDatos;
+    ArrayList<Municipio> listDatos;
     RecyclerView recycler;
 
     @Override
@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         recycler = (RecyclerView)findViewById(R.id.recyclerId);
         recycler.setLayoutManager(new LinearLayoutManager(this));
+
+        listDatos=new ArrayList<>();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.datos.gov.co/resource/")
@@ -44,17 +46,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void obtenerDatos(){
         SitiosService service = retrofit.create(SitiosService.class);
-        Call<List<Municipio>> sitioRespuestaCall = service.obtenerListaDeSitios();
-        sitioRespuestaCall.enqueue(new Callback<List<Municipio>>() {
+        Call<ArrayList<Municipio>> sitioRespuestaCall = service.obtenerListaDeSitios();
+        sitioRespuestaCall.enqueue(new Callback<ArrayList<Municipio>>() {
             @Override
-            public void onResponse(Call<List<Municipio>> call, Response<List<Municipio>> response) {
+            public void onResponse(Call<ArrayList<Municipio>> call, Response<ArrayList<Municipio>> response) {
 
                 if (response.isSuccessful()){
-                    List lista = response.body();
+                    ArrayList lista = response.body();
                     for (int i =0 ; i <lista.size();i++) {
                         Municipio m = (Municipio) lista.get(i);
-                        Log.i(TAG, " | Nombre : " + m.getNombreMunicipio() + " | Alcalde: " + m.getNombreAlcalde() + "| Correo :  " + m.getCorreocontactenos());
+
+
+
                     }
+
+
+
+                    AdapterDatos adapter=new AdapterDatos(lista);
+                    recycler.setAdapter(adapter);
 
                 }else{
                     Log.e(TAG,"OnResponse : "+response.errorBody());
@@ -64,13 +73,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Municipio>> call, Throwable t) {
-                Log.e(TAG,"OnFailure : "+t.getMessage());
-
-                //HACER TAREA CON RECYCLE VIEW
-                //HACER TAREA CARD VIEW
+            public void onFailure(Call<ArrayList<Municipio>> call, Throwable t) {
 
             }
+
+
         });
 
 

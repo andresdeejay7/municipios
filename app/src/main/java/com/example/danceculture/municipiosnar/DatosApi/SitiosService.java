@@ -2,6 +2,7 @@ package com.example.danceculture.municipiosnar.DatosApi;
 
 import com.example.danceculture.municipiosnar.models.Municipio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -15,6 +16,6 @@ public interface SitiosService {
 
     @GET("pfet-63uw.json")
 
-    Call<List<Municipio>> obtenerListaDeSitios();
+    Call<ArrayList<Municipio>> obtenerListaDeSitios();
 
 }
